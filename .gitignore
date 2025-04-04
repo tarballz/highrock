@@ -1,74 +1,65 @@
-# -----------------------------
+# ---------------------------------------------
 # 1) Operating system cruft
-# -----------------------------
+# ---------------------------------------------
 .DS_Store
 Thumbs.db
 
-# -----------------------------
-# 2) General editor/IDE
-# -----------------------------
-*.swp
-*~
+# ---------------------------------------------
+# 2) Editor/IDE
+# ---------------------------------------------
 .vscode/
 .idea/
+*.swp
+*~
 
-# -----------------------------
+# ---------------------------------------------
 # 3) Docker-related
-# -----------------------------
-# Ignore local env files containing sensitive info
+# ---------------------------------------------
+# Local env files (store secrets outside version control)
 .env
 .env.*
-env.*.local
 
-# If you keep separate override files for dev/staging
+# If you have local override files (often not committed)
 docker-compose.override.yml
 docker-compose.*.override.yml
 
-# Docker container logs/pids
+# Docker logs / containers / images (if placed in project by local config)
+logs/
 *.pid
 *.pid.lock
-logs/
 
-# -----------------------------
-# 4) Moodle
-# -----------------------------
-# Moodle’s data directory (stores user files, caches, sessions, etc.)
+# ---------------------------------------------
+# 4) Moodle data
+# ---------------------------------------------
+# If you bind-mount a local directory instead of using named volumes,
+# ensure it’s ignored so large user data isn't checked into git.
 moodle_data/
-moodle_data/*
 
-# Auto-generated config (often environment-specific)
-config.php
+# If you separately create a "moodledata" directory:
+moodledata/
+moodledata/*
 
-# If the Moodle directory is named differently, adjust here
-moodle/config.php
-moodle_data/temp/
-moodle_data/cache/
-moodle_data/sessions/
-moodle_data/filedir/
-moodle_data/localcache/
-
-# -----------------------------
-# 5) MariaDB
-# -----------------------------
-# Database data directory (when mounted as a volume locally)
-data/
-mariadb_data/
-*.sql
+# ---------------------------------------------
+# 5) MariaDB data
+# ---------------------------------------------
+# If you store MariaDB data files locally instead of using named volumes:
 db_data/
-db_data/*
 
-# -----------------------------
+# Ignore database dumps/backups
+*.sql
+*.sql.gz
+
+# ---------------------------------------------
 # 6) Node / Web build artifacts (if applicable)
-# -----------------------------
+# ---------------------------------------------
 node_modules/
 dist/
 build/
 
-# -----------------------------
-# 7) Logs / Reports
-# -----------------------------
+# ---------------------------------------------
+# 7) Logs / coverage / temporary files
+# ---------------------------------------------
 *.log
-*.log.*
 *.out
 *.tmp
 coverage/

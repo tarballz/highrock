@@ -1,0 +1,72 @@
+# -----------------------------
+# 1) Operating system cruft
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# 2) General editor/IDE
+# -----------------------------
+*.swp
+*~
+.vscode/
+.idea/
+
+# -----------------------------
+# 3) Docker-related
+# -----------------------------
+# Ignore local env files containing sensitive info
+.env
+.env.*
+env.*.local
+
+# If you keep separate override files for dev/staging
+docker-compose.override.yml
+docker-compose.*.override.yml
+
+# Docker container logs/pids
+*.pid
+*.pid.lock
+logs/
+
+# -----------------------------
+# 4) Moodle
+# -----------------------------
+# Moodle’s data directory (stores user files, caches, sessions, etc.)
+moodledata/
+moodledata/*
+
+# Auto-generated config (often environment-specific)
+config.php
+
+# If the Moodle directory is named differently, adjust here
+moodle/config.php
+moodledata/temp/
+moodledata/cache/
+moodledata/sessions/
+moodledata/filedir/
+moodledata/localcache/
+
+# -----------------------------
+# 5) MariaDB
+# -----------------------------
+# Database data directory (when mounted as a volume locally)
+data/
+mariadb_data/
+*.sql
+
+# -----------------------------
+# 6) Node / Web build artifacts (if applicable)
+# -----------------------------
+node_modules/
+dist/
+build/
+
+# -----------------------------
+# 7) Logs / Reports
+# -----------------------------
+*.log
+*.log.*
+*.out
+*.tmp
+coverage/

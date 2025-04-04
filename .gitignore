@@ -33,8 +33,8 @@ logs/
 # 4) Moodle
 # -----------------------------
 # Moodle’s data directory (stores user files, caches, sessions, etc.)
-moodledata/
-moodledata/*
+moodle_data/
+moodle_data/*
 
 # Auto-generated config (often environment-specific)
 config.php
@@ -55,6 +55,7 @@ data/
 mariadb_data/
 *.sql
 db_data/
+db_data/*
 
 # -----------------------------
 # 6) Node / Web build artifacts (if applicable)

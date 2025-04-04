@@ -41,11 +41,11 @@ config.php
 
 # If the Moodle directory is named differently, adjust here
 moodle/config.php
-moodledata/temp/
-moodledata/cache/
-moodledata/sessions/
-moodledata/filedir/
-moodledata/localcache/
+moodle_data/temp/
+moodle_data/cache/
+moodle_data/sessions/
+moodle_data/filedir/
+moodle_data/localcache/
 
 # -----------------------------
 # 5) MariaDB
@@ -54,6 +54,7 @@ moodledata/localcache/
 data/
 mariadb_data/
 *.sql
+db_data/
 
 # -----------------------------
 # 6) Node / Web build artifacts (if applicable)

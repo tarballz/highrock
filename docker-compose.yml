@@ -18,7 +18,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - db_data:/var/lib/mysql
+      - hrs_db_data:/var/lib/mysql
 
   moodle:
     image: bitnami/moodle:latest
@@ -42,7 +42,7 @@ services:
     # entrypoint: ["tail", "-f", "/dev/null"]
 
 volumes:
-  db_data:
+  hrs_db_data:
     external: true
   moodle_data:
     external: true

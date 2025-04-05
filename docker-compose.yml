@@ -43,6 +43,9 @@ services:
 
 volumes:
   db_data:
+    external: true
   moodle_data:
+    external: true
   moodle_php_data:
+    external: true
   moodle_apache_conf:

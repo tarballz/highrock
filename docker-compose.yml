@@ -1,53 +1,48 @@
 version: '3.8'
+
 services:
   db:
-    #image: mariadb:latest
-    image: bitnami/mariadb:latest
+    image: mariadb:11
     container_name: moodle_db
     environment:
-      - MARIADB=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_CHARACTER_SET=utf8mb4
-      - MARIADB_COLLATE=utf8mb4_unicode_ci
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      # MARIADB_CHARACTER_SET: utf8mb4
+      # MARIADB_COLLATE: utf8mb4_unicode_ci
+    command: '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci'
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - 'db_data:/bitnami/mariadb'
-    # networks:
-    #   - moodle-network
+      - db_data:/var/lib/mysql
 
   moodle:
     image: bitnami/moodle:latest
     container_name: moodle_app
-    #restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "80:8080"
-      # If you want to expose HTTPS from the container, you could also map 443
-      - "443:8443"
     environment:
-      - MOODLE_DATABASE_TYPE=mariadb
-      # - MOODLE_DATABASE_HOST=db
-      - MOODLE_DATABASE_NAME=${MARIADB_DATABASE}
-      # - MOODLE_DATABASE_USER=${MARIADB_USER}
-      # - MOODLE_DATABASE_PASSWORD=${MARIADB_PASSWORD}
-      # Optionally set SITE_URL if you have a domain:
-      # - MOODLE_SITE_URL=http://example.com
-      - MOODLE_DATABASE_HOST=db
-      - MOODLE_DATABASE_PORT_NUMBER=3306
-      - MOODLE_DATABASE_USER=${MARIADB_USER}
-      - MOODLE_DATABASE_PASSWORD=${MARIADB_PASSWORD}
+      MOODLE_DATABASE_TYPE: ${MOODLE_DATABASE_TYPE}
+      MOODLE_DATABASE_HOST: db
+      MOODLE_DATABASE_NAME: ${MOODLE_DATABASE_NAME}
+      MOODLE_DATABASE_USER: ${MOODLE_DATABASE_USER}
+      MOODLE_DATABASE_PASSWORD: ${MOODLE_DATABASE_PASSWORD}
     volumes:
-      - 'moodle_data:/bitnami/moodle'
-      - 'moodledata_data:/bitnami/moodledata'
-    # networks:
-    #   - moodle-network
+      - moodle_data:/bitnami/moodle
+      - moodle_php_data:/bitnami/php
+      - moodle_apache_conf:/bitnami/apache/conf
+    # restart: "no"
+    # entrypoint: ["tail", "-f", "/dev/null"]
 
 volumes:
   db_data:
-    driver: local
   moodle_data:
-    driver: local
-  moodledata_data:
-    driver: local
+  moodle_php_data:
+  moodle_apache_conf:

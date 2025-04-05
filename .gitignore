@@ -62,4 +62,8 @@ build/
 *.log
 *.out
 *.tmp
+
+# Dont check backups into git
+backups/
+
 coverage/
